@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "686620566061",
+    "firebase_url": "https://felipeporelmundo.firebaseio.com",
+    "project_id": "felipeporelmundo",
+    "storage_bucket": "felipeporelmundo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:686620566061:android:e86dbe3043551509470ea4",
+        "android_client_info": {
+          "package_name": "com.felipeporelmundo.application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "686620566061-a5r056e539s4h5rmet4r1t53ne05roij.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.felipeporelmundo.application",
+            "certificate_hash": "aafcca01d7ed7732c85bd6ff4bd9b34393cc5bd1"
+          }
+        },
+        {
+          "client_id": "686620566061-htrfcoec9285tm2urup8v8eh7i0av5m6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBldpMuGeFw1U8AyH9o0F0OpHUMHr-205E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "686620566061-htrfcoec9285tm2urup8v8eh7i0av5m6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
