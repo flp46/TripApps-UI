@@ -11,6 +11,8 @@ class UserBloc implements Bloc{
   Stream<FirebaseUser> streamFirebase = FirebaseAuth.instance.onAuthStateChanged;
   Stream<FirebaseUser> get authStatus => streamFirebase; 
 
+  signOut() => authRepository.signOut();
+  
   @override
   void dispose() {
     // TODO: implement dispose

@@ -18,7 +18,6 @@ class ProfileTrips extends StatelessWidget {
           children: <Widget>[
             ProfileHeader(),
             ProfilePlacesList()
-
           ],
         ),
       ],

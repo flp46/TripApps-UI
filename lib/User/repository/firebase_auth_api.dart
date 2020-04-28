@@ -20,4 +20,10 @@ class FirebaseAuthAPI {
     //Lo que me retorna el futre, sera ese user
     return user;
   }
+
+  signOut() async {
+    await _auth.signOut().then((onValue) => print('ya cerre sesion en firebase'));
+    _googleSignIn.signOut();
+    print('ya cerrer sesion de google');
+  }
 }
