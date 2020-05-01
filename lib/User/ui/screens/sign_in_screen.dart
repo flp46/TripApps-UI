@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:platzi_trips_app/User/bloc/user_bloc.dart';
+import 'package:platzi_trips_app/User/model/user.dart';
 import 'package:platzi_trips_app/platzi_trips_cupertino.dart';
 import 'package:platzi_trips_app/widgets/button_green.dart';
 import 'package:platzi_trips_app/widgets/gradient_back.dart';
@@ -60,7 +61,14 @@ class _SignInScreen extends State<SignInScreen>{
               ButtonGreen(
                 text: 'Login with Gmail', 
                 onPressed: (){
-                  userBloc.signIn().then((user) => print('El usuario es ${user.displayName}'));
+                  userBloc.signIn().then((user){ //Como respuesta del registro, firebase me pasa un objeto de tipo user que usare para persistir los datos
+                    userBloc.updateUserData(User( //A Firestore decidi pasasrle el objeto User para setear los valores
+                      uid: user.uid, //parametro del objeto User: valor que me retorno el objeto de firebase en el signIn de arriba
+                      name: user.displayName, //parametro del objeto User: valor que me retorno el objeto de firebase en el signIn de arriba
+                      email: user.email, //parametro del objeto User: valor que me retorno el objeto de firebase en el signIn de arriba
+                      photoURL: user.photoUrl //parametro del objeto User: valor que me retorno el objeto de firebase en el signIn de arriba
+                    ));
+                  });
                 },
                 width: 300.0,
                 height: 50.0,
