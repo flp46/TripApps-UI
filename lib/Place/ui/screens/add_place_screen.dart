@@ -1,8 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:generic_bloc_provider/generic_bloc_provider.dart';
+import 'package:platzi_trips_app/Place/model/place.dart';
 import 'package:platzi_trips_app/Place/ui/widgets/card_image.dart';
 import 'package:platzi_trips_app/Place/ui/widgets/title_input_location.dart';
+import 'package:platzi_trips_app/User/bloc/user_bloc.dart';
+import 'package:platzi_trips_app/widgets/button_purple.dart';
 import 'package:platzi_trips_app/widgets/gradient_back.dart';
 import 'package:platzi_trips_app/widgets/text_input.dart';
 import 'package:platzi_trips_app/widgets/title_header.dart';
@@ -24,6 +28,8 @@ class AddPlaceScreen extends StatefulWidget{
 class _AddPlaceScreen extends State<AddPlaceScreen>{
   @override
   Widget build(BuildContext context) {
+
+    UserBloc userBloc = BlocProvider.of<UserBloc>(context);
 
     double screenWidth = MediaQuery.of(context).size.width;
     final _controllerTitlePlace = TextEditingController();
@@ -89,6 +95,25 @@ class _AddPlaceScreen extends State<AddPlaceScreen>{
                     iconData: Icons.location_on,
                     controller: _controllerTitleLocation,
                   ) ,
+                ),
+                Container(
+                  width: 70,
+                  child: ButtonPurple(
+                    buttonText: 'Submit',
+                    onPressed: (){
+                      userBloc.updatePlaceData(Place(
+                        name: _controllerTitlePlace.text,
+                        description: _controllerTitleDescription.text,
+                        likes: 0,
+                      )).whenComplete((){
+                        print('TERMINO');
+                        Navigator.pop(context);
+                      });
+                    }
+                      //1. Subir la foto al filestorage
+                      //2. Crear el objeto y enviarlo a Cloud Firestore
+                    
+                  )
                 )
               ]
             )
