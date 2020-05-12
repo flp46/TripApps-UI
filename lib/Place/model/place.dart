@@ -6,7 +6,7 @@ class Place {
   final String name;
   final String description;
   final String urlImage;
-  final User userOwner;
+  // final User userOwner; YA LO ESTOY PASANDO DE TIPO REFERENCE, ENTONCES NO SERA UN OBJETO COMO TAL
   int likes;
   
 
@@ -15,7 +15,7 @@ class Place {
     this.name, 
     this.description, 
     this.urlImage, 
-    this.userOwner,
+    // this.userOwner,
     this.likes
   });
 }

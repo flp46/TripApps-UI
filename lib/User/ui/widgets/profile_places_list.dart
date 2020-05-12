@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:generic_bloc_provider/generic_bloc_provider.dart';
+import 'package:platzi_trips_app/User/bloc/user_bloc.dart';
+import 'package:platzi_trips_app/User/model/user.dart';
 import 'profile_place.dart';
 import 'package:platzi_trips_app/Place/model/place.dart';
 
 
 class ProfilePlacesList extends StatelessWidget {
 
+  UserBloc userBloc;
+  User user;
+
+  ProfilePlacesList({Key key, this.user});
+
+  
   Place place =  Place(
     name: 'Knuckles Mountains Range', 
     description: 'Hiking. Water fall hunting. Natural bath', 
@@ -22,6 +31,9 @@ class ProfilePlacesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    UserBloc userBloc = BlocProvider.of(context);
+    
     return Container(
       margin: EdgeInsets.only(
           top: 10.0,
@@ -29,12 +41,41 @@ class ProfilePlacesList extends StatelessWidget {
           right: 20.0,
           bottom: 10.0
       ),
-      child: Column(
-        children: <Widget>[
-          ProfilePlace(place),
-          ProfilePlace(place2),
-        ],
-      ),
+      child: StreamBuilder(
+        stream: userBloc.myPlacesList(user.uid),
+        builder: (context, AsyncSnapshot snapshot){
+          switch (snapshot.connectionState){
+            case ConnectionState.none:
+              print('Quede en none');
+              return CircularProgressIndicator();
+            case ConnectionState.waiting:
+              print('Quede en waiting');
+              return CircularProgressIndicator();
+            case ConnectionState.active:
+              return Column(
+                children: userBloc.buildPlaces(snapshot.data.documents)
+              );
+            case ConnectionState.done:
+              return Column(
+                children: userBloc.buildPlaces(snapshot.data.documents)
+              );
+            default:
+              return Column(
+                children: userBloc.buildPlaces(snapshot.data.documents)
+              );
+          }
+        }
+      )
+      
+      
+      
+      
+      // Column(
+      //   children: <Widget>[
+      //     ProfilePlace(place),
+      //     ProfilePlace(place2),
+      //   ],
+      // ),
     );
   }
 

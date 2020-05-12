@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:platzi_trips_app/Place/model/place.dart';
 import 'package:platzi_trips_app/User/model/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:platzi_trips_app/User/ui/widgets/profile_place.dart';
 
 class CloudFirestoreAPI {
 
@@ -33,9 +34,32 @@ class CloudFirestoreAPI {
     await refPlace.add({
       'name': place.name,
       'description': place.description,
-      //'urlImage': Todavia no la tengo
+      'urlImage': place.urlImage,
       'likes': place.likes,
-      'userOwner': '$USERS/$uid' //Este va a ser de tip Reference
+      'userOwner': _db.document("${USERS}/${uid}") //Este va a ser de tip Reference
+    }).then((DocumentReference snapshot){
+      snapshot.documentID;
+      DocumentReference refUser = _db.collection(USERS).document(uid);
+      refUser.updateData({
+        'myPlaces': FieldValue.arrayUnion([_db.document('${PLACES}/ ${snapshot.documentID}')])
+      });
     });
   }
-}
+
+  List<ProfilePlace> buildPlaces (List<DocumentSnapshot> placesInFirebaseSnapshot){
+    List<ProfilePlace> profilePlaces = List<ProfilePlace>();
+
+    placesInFirebaseSnapshot.forEach((p){
+      profilePlaces.add(ProfilePlace(
+        Place(
+          name: p.data['name'],
+          description: p.data['description'],
+          urlImage: p.data['urlImage'],
+          likes: p.data['likes']
+        )
+      ));
+    });
+    print('$profilePlaces');
+    return profilePlaces;
+  } //Cierre de metodo buildPlaces
+} // Cierre de Clase

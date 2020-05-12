@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:platzi_trips_app/Place/model/place.dart';
@@ -101,13 +103,24 @@ class _AddPlaceScreen extends State<AddPlaceScreen>{
                   child: ButtonPurple(
                     buttonText: 'Submit',
                     onPressed: (){
-                      userBloc.updatePlaceData(Place(
-                        name: _controllerTitlePlace.text,
-                        description: _controllerTitleDescription.text,
-                        likes: 0,
-                      )).whenComplete((){
-                        print('TERMINO');
-                        Navigator.pop(context);
+                      userBloc.currentUser.then((FirebaseUser user) {
+                        if(user != null){
+                          String uid = user.uid;
+                          // String path ='${uid}/${DateTime.now().toString()}'; FORMA DE CARGAR UN ARCHIVO EN FILE STORAGE
+                          // userBloc.uploadImage(path, widget.image).then((StorageUploadTask storageUploadTask){ 
+                          //   storageUploadTask.onComplete.then((StorageTaskSnapshot snapshot){
+                          //     snapshot.ref.getDownloadURL().then((urlImage){
+                          //       print(urlImage);
+                          userBloc.updatePlaceData(Place(
+                            name: _controllerTitlePlace.text,
+                            description: _controllerTitleDescription.text,
+                            urlImage: "https://images.unsplash.com/photo-1586277526843-23a623285cd1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80",
+                            likes: 0,
+                          )).whenComplete((){
+                            print('TERMINO');
+                            Navigator.pop(context);
+                          });
+                        }
                       });
                     }
                       //1. Subir la foto al filestorage
